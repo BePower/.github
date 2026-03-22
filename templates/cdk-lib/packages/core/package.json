@@ -1,0 +1,39 @@
+{
+  "name": "{{scope}}/core",
+  "version": "0.0.0",
+  "description": "Core CDK constructs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "BePower",
+  "license": "MIT",
+  "homepage": "{{homepage}}",
+  "bugs": {
+    "url": "{{bugs}}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "{{repository}}",
+    "directory": "packages/core"
+  },
+  "engines": {
+    "node": ">= 22"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "peerDependencies": {
+    "aws-cdk-lib": "^2.194.0",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "aws-cdk-lib": "^2.194.0",
+    "constructs": "^10.4.2"
+  }
+}

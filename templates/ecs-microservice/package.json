@@ -1,0 +1,45 @@
+{
+  "name": "{{name}}",
+  "version": "0.0.0",
+  "description": "{{description}}",
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "clean": "rimraf dist",
+    "lint": "concurrently npm:lint:* --prefixColors auto",
+    "lint:engines": "ls-engines",
+    "lint:format": "biome check --write",
+    "lint:lockfile": "lockfile-lint",
+    "lint:package": "npmPkgJsonLint .",
+    "lint:sort_package": "sort-package-json \"package.json\"",
+    "lint:typecheck": "tsc --noEmit",
+    "prepare": "lefthook install",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts",
+    "start:dev": "nodemon",
+    "start:prod": "node dist/main.js",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [],
+  "author": "BePower",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 22"
+  },
+  "workspaces": [
+    "cdk"
+  ],
+  "dependencies": {
+    "@nestjs/common": "^10.4.0",
+    "@nestjs/core": "^10.4.0",
+    "@nestjs/platform-express": "^10.4.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^10.4.0",
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
