@@ -6,30 +6,11 @@ import { promisify } from 'node:util';
 import { Command } from '@commander-js/extra-typings';
 
 import { CONFIG_FILES, copyConfig, copyWorkflows } from '../utils/configs.js';
+import { DEV_DEPENDENCIES } from '../utils/constants.js';
 import { paths } from '../utils/paths.js';
 import { copyTemplate } from '../utils/templates.js';
 
 const execAsync = promisify(exec);
-
-const DEV_DEPENDENCIES: Record<string, string> = {
-  '@biomejs/biome': '^2.4.8',
-  '@commitlint/cli': '^20.5.0',
-  '@commitlint/config-conventional': '^20.5.0',
-  '@tsconfig/node22': '^22.0.5',
-  '@types/node': '^25.5.0',
-  '@vitest/coverage-v8': '^4.1.0',
-  bonvoy: '^0.13.1',
-  concurrently: '^9.2.1',
-  lefthook: '^2.1.4',
-  'lockfile-lint': '^5.0.0',
-  'ls-engines': '^0.10.0',
-  'npm-package-json-lint': '^9.1.0',
-  rimraf: '^6.1.3',
-  'sort-package-json': '^3.6.1',
-  tsdown: '^0.21.4',
-  typescript: '^5.9.3',
-  vitest: '^4.1.0',
-};
 
 const VALID_TYPES = ['single', 'monorepo', 'cdk-app', 'cdk-lib', 'ecs-microservice'] as const;
 

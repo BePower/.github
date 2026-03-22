@@ -1,10 +1,5 @@
-import { Stack, type StackProps } from 'aws-cdk-lib';
-import type { Construct } from 'constructs';
+import { Stack } from 'aws-cdk-lib';
 
 export class AppStack extends Stack {
-  constructor(scope: Construct, id: string, props?: StackProps) {
-    super(scope, id, props);
-
-    // TODO: Add ECS Fargate service, Aurora DB, Redis, SQS queues
-  }
+  // TODO: Add ECS Fargate service, Aurora DB, Redis, SQS queues
 }

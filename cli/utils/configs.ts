@@ -56,7 +56,11 @@ export async function copyWorkflows(
 
 export async function mergePackageJson(
   targetDir: string,
-  overrides: { scripts?: Record<string, string>; devDependencies?: Record<string, string> },
+  overrides: {
+    scripts?: Record<string, string>;
+    devDependencies?: Record<string, string>;
+    engines?: Record<string, string>;
+  },
 ): Promise<void> {
   const pkgPath = join(targetDir, 'package.json');
   const pkg = JSON.parse(await readFile(pkgPath, 'utf-8'));
@@ -66,6 +70,9 @@ export async function mergePackageJson(
   }
   if (overrides.devDependencies) {
     pkg.devDependencies = { ...pkg.devDependencies, ...overrides.devDependencies };
+  }
+  if (overrides.engines && !pkg.engines) {
+    pkg.engines = overrides.engines;
   }
 
   await writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);

@@ -1,4 +1,4 @@
-import { join } from 'path';
+import { join } from 'node:path';
 
 import { Duration, Stack, type StackProps } from 'aws-cdk-lib';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
