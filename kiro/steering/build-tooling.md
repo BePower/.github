@@ -55,3 +55,13 @@ npm run lint:engines       # Validate engine compatibility
 
 - All `@bepower` packages published to GitHub Packages
 - `.npmrc` with `@bepower:registry=https://npm.pkg.github.com`
+
+## Scripts Reference
+
+| Script | Description |
+|--------|-------------|
+| `npm run build` | Build with tsdown |
+| `npm run clean` | Remove dist/ |
+| `npm run lint` | All linters in parallel |
+| `npm test` | Run tests |
+| `npm run test:coverage` | Tests with coverage |

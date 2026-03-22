@@ -6,6 +6,7 @@ For ambiguous or complex requests, ask clarifying questions BEFORE writing code:
 - What's the expected behavior?
 - Are there edge cases to consider?
 - Does this affect existing features?
+- What's the priority (quick fix vs proper solution)?
 
 Skip the interview for clear, well-defined tasks.
 
@@ -24,12 +25,13 @@ Use ASCII diagrams when discussing:
 - Architecture decisions
 - Data flow between components
 - New feature design involving multiple files
+- Database schema relationships
 
 ## Context Hygiene
 
 - Keep each steering/spec file under ~200 lines
 - Split files when they grow beyond that
-- One concern per file
+- One concern per file (don't mix code style with testing rules)
 - Update specs when features are completed or changed
 
 ## Git Rules

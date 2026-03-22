@@ -1,0 +1,69 @@
+{
+  "name": "dev",
+  "description": "Agent for __NAME__ - NestJS microservice on ECS Fargate",
+  "prompt": "file://../prompts/dev.md",
+  "resources": [
+    "file://README.md",
+    "file://.kiro/specs/**/*.md",
+    "file://.kiro/steering/**/*.md",
+    "file://docs/**/*.md"
+  ],
+  "tools": [
+    "read",
+    "write",
+    "shell",
+    "grep",
+    "glob",
+    "web_search",
+    "web_fetch",
+    "introspect",
+    "thinking",
+    "code"
+  ],
+  "allowedTools": [
+    "read",
+    "shell",
+    "grep",
+    "glob",
+    "web_search",
+    "web_fetch",
+    "introspect",
+    "thinking",
+    "code"
+  ],
+  "toolsSettings": {
+    "write": {
+      "allowedPaths": [
+        ".kiro/**",
+        ".github/**",
+        "cdk/**",
+        "src/**",
+        "test/**",
+        "e2e/**",
+        "config/**",
+        "migrations/**",
+        "docs/**",
+        "README.md",
+        "CHANGELOG.md",
+        "package.json",
+        "package-lock.json",
+        "tsconfig.json",
+        "tsconfig.build.json",
+        "nest-cli.json",
+        ".editorconfig",
+        ".gitignore",
+        "Dockerfile"
+      ]
+    },
+    "shell": {
+      "autoAllowReadonly": true,
+      "deniedCommands": [
+        ".*git commit.*",
+        ".*git push.*",
+        ".*git tag .*",
+        ".*npm publish.*",
+        ".*cdk deploy.*"
+      ]
+    }
+  }
+}

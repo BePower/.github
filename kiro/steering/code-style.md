@@ -68,3 +68,16 @@ export class MyClass {}
 - Prefer native Node.js APIs when possible
 - Use `^` for dependencies (allow minor/patch updates)
 - Security updates must be applied immediately
+- Keep dependencies up to date — run `npm outdated` regularly
+
+## Comments & Documentation
+
+### When to Comment
+- Complex algorithms or non-obvious logic
+- Public APIs (JSDoc)
+- Workarounds or hacks (with explanation)
+
+### When NOT to Comment
+- Obvious code
+- Redundant information
+- Commented-out code (delete it)

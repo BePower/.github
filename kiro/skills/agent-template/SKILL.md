@@ -20,3 +20,5 @@ Generate a `.kiro/agents/dev.json` file tailored to the project.
 - Review `references/base.json` for the common agent structure
 - Review `references/example-monorepo-library.json` for npm library projects
 - Review `references/example-webapp-vercel.json` for web app projects
+- Review `references/example-cdk-app.json` for CDK infrastructure projects
+- Review `references/example-ecs-microservice.json` for NestJS/ECS microservice projects
