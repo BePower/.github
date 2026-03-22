@@ -9,12 +9,15 @@ Generate the 5 standard steering files under `.kiro/steering/`.
 
 ## Files
 
-All projects get these 5 files:
+All projects get these 5 base files:
 1. `code-style.md` — TypeScript conventions, naming, error handling
 2. `build-tooling.md` — Stack reference (tsdown, biome, lefthook, npm)
 3. `testing.md` — Vitest, coverage, mocking rules
 4. `interaction.md` — Agent behavior (interview, plan mode, no git commit)
 5. `commit-conventions.md` — Conventional commits + gitmoji text codes
+
+CDK and ECS projects also get:
+6. `architecture.md` — CDK patterns, NestJS structure, observability, data, security, naming
 
 ## Customization
 
@@ -22,6 +25,7 @@ Adapt each file to the project:
 - `build-tooling.md` — Add project-specific scripts, build commands, deploy info
 - `testing.md` — Add project-specific test patterns
 - `code-style.md` — Add project-specific conventions
+- `architecture.md` — Include only sections relevant to the project type (CDK, NestJS, serverless, etc.)
 
 ## References
 - Review `references/code-style.md` for the code style template
@@ -29,3 +33,4 @@ Adapt each file to the project:
 - Review `references/testing.md` for the testing template
 - Review `references/interaction.md` for the interaction template
 - Review `references/commit-conventions.md` for the commit conventions template
+- Review `references/architecture.md` for the architecture template (CDK/ECS projects)

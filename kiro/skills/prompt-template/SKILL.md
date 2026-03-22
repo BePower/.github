@@ -21,3 +21,5 @@ Every prompt should have these sections:
 ## References
 - Review `references/example-library.md` for npm library prompts
 - Review `references/example-webapp.md` for web app prompts
+- Review `references/example-cdk-app.md` for CDK infrastructure project prompts
+- Review `references/example-ecs-microservice.md` for ECS/NestJS microservice prompts
