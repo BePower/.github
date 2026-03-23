@@ -30,9 +30,13 @@ export const CONFIG_FILES: ConfigFile[] = [
   { src: 'npmrc', dest: '.npmrc' },
 ];
 
-export async function copyConfig(file: ConfigFile, targetDir: string): Promise<boolean> {
+export async function copyConfig(
+  file: ConfigFile,
+  targetDir: string,
+  force = false,
+): Promise<boolean> {
   const dest = join(targetDir, file.dest);
-  if (await fileExists(dest)) return false;
+  if (!force && (await fileExists(dest))) return false;
   await copyFile(join(paths.configs, file.src), dest);
   return true;
 }
@@ -40,6 +44,7 @@ export async function copyConfig(file: ConfigFile, targetDir: string): Promise<b
 export async function copyWorkflows(
   tier: 'base' | 'library' | 'docs',
   targetDir: string,
+  force = false,
 ): Promise<void> {
   const srcDir = join(paths.workflows, tier);
   const destDir = join(targetDir, '.github/workflows');
@@ -48,7 +53,7 @@ export async function copyWorkflows(
   for (const file of await readdir(srcDir)) {
     const destFile =
       file === 'dependabot.yml' ? join(targetDir, '.github', file) : join(destDir, file);
-    if (!(await fileExists(destFile))) {
+    if (force || !(await fileExists(destFile))) {
       await copyFile(join(srcDir, file), destFile);
     }
   }

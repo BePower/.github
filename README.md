@@ -50,11 +50,12 @@ Add golden configs to an existing project.
 
 ```bash
 cd existing-project
-dev setup
+dev setup            # Copy configs (skip existing files)
+dev setup --force    # Overwrite existing configs with latest golden versions
 ```
 
 What it does:
-1. Copies config files (only if they don't already exist)
+1. Copies config files (only if they don't already exist, unless `--force`)
 2. Merges devDependencies and scripts into `package.json`
 3. Adds base GitHub Actions workflows
 

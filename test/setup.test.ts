@@ -67,4 +67,17 @@ describe('setup command', () => {
     expect(await readFile(join(tempDir, 'biome.json'), 'utf-8')).toBe('custom');
     expect(mockLog).toHaveBeenCalledWith(expect.stringContaining('· biome.json (exists)'));
   });
+
+  it('should overwrite existing config files with --force', async () => {
+    await writeFile(join(tempDir, 'package.json'), JSON.stringify({ name: 'test', scripts: {} }));
+    await writeFile(join(tempDir, 'biome.json'), 'custom');
+    const mockLog = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+    const { setup } = await import('../cli/commands/setup.js');
+    await setup.parseAsync(['--force'], { from: 'user' });
+
+    expect(await readFile(join(tempDir, 'biome.json'), 'utf-8')).not.toBe('custom');
+    expect(mockLog).toHaveBeenCalledWith('Force mode: overwriting existing configs\n');
+    expect(mockLog).toHaveBeenCalledWith(expect.stringContaining('↻ biome.json (updated)'));
+  });
 });
