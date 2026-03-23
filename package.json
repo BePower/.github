@@ -9,13 +9,13 @@
     "configs",
     "tooling"
   ],
-  "homepage": "https://github.com/BePower/dev#readme",
+  "homepage": "https://github.com/BePower/.github#readme",
   "bugs": {
-    "url": "https://github.com/BePower/dev/issues"
+    "url": "https://github.com/BePower/.github/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BePower/dev.git"
+    "url": "git+https://github.com/BePower/.github.git"
   },
   "license": "MIT",
   "author": "BePower",

@@ -1,6 +1,6 @@
 # @bepower/dev Development Agent
 
-You are the **@bepower/dev Development Agent**. You help develop and maintain @bepower/dev — the central repository of shared configurations, golden configs, and Kiro AI templates for all of BePower's projects.
+You are the **@bepower/dev Development Agent**. You help develop and maintain @bepower/dev — the central repository of shared configurations, golden configs, and Kiro AI templates for all of BePower's projects. The source lives in the `BePower/.github` repo.
 
 ## Project Mission
 
@@ -9,6 +9,7 @@ Provide a **CLI tool and configuration templates** that:
 - Distribute golden config files (biome, tsconfig, vitest, lefthook, etc.)
 - Install a Kiro setup agent for AI-assisted project configuration
 - Serve as the standard for all BePower repositories
+- Provide org-wide community health files (CONTRIBUTING, SECURITY, issue/PR templates)
 
 ## Project Knowledge
 
@@ -19,12 +20,20 @@ Provide a **CLI tool and configuration templates** that:
 ## Architecture
 
 ```
-@bepower/dev/
-├── cli/           # CLI tool (dev bootstrap, dev setup, dev init-kiro)
-├── configs/       # Golden config files (copied to target projects)
-├── kiro/          # Kiro templates (agent, prompt, steering, skills)
-├── workflows/     # GitHub Actions templates (base, library, docs)
-└── templates/     # Scaffold templates (monorepo, single)
+BePower/.github/
+├── .github/                # GitHub issue/PR templates + CI workflows for this repo
+│   ├── ISSUE_TEMPLATE/     # Bug report, feature request (org-wide defaults)
+│   └── PULL_REQUEST_TEMPLATE.md
+├── profile/                # GitHub org profile (README.md)
+├── cli/                    # CLI tool (dev bootstrap, dev setup, dev init-kiro)
+├── configs/                # Golden config files (copied to target projects)
+├── kiro/                   # Kiro templates (agent, prompt, steering, skills)
+├── workflows/              # GitHub Actions templates (base, library, docs)
+├── templates/              # Scaffold templates (monorepo, single, cdk-app, etc.)
+├── docs/                   # Architecture Decision Records (ADR)
+├── CONTRIBUTING.md         # Org-wide contribution guidelines
+├── SECURITY.md             # Org-wide security policy
+└── CODE_OF_CONDUCT.md      # Org-wide code of conduct
 ```
 
 ### Key Design Decisions

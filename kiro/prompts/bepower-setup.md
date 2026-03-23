@@ -50,6 +50,7 @@ Use the templates in your skills' `references/` folders. Adapt them to the speci
 ## BePower Conventions
 
 - GitHub org: `BePower`
+- Org repo: `BePower/.github` (community health + `@bepower/dev` CLI)
 - npm scope: `@bepower`
 - Registry: GitHub Packages (`https://npm.pkg.github.com`)
 - Package manager: npm

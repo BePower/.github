@@ -2,7 +2,7 @@
 
 ## Goal
 
-Replicate `@zweer/dev` (personal repo at `../../mine/dev`) into `@bepower/dev` (this repo), adapting it for BePower's corporate needs based on existing company repos under `../`.
+Replicate `@zweer/dev` (personal repo at `../../mine/dev`) into `@bepower/dev` (this repo: `BePower/.github`), adapting it for BePower's corporate needs based on existing company repos under `../`.
 
 ---
 
