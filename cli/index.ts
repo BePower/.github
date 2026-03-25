@@ -17,7 +17,10 @@ const pkg = JSON.parse(readFileSync(resolve(__dirname, '..', 'package.json'), 'u
   version: string;
 };
 
-const program = new Command().name(pkg.name).description(pkg.description).version(pkg.version);
+const program = new Command()
+  .name(pkg.name.replace('@bepower/', ''))
+  .description(pkg.description)
+  .version(pkg.version);
 
 program.addCommand(bootstrap);
 program.addCommand(setup);

@@ -28,6 +28,11 @@ export const initKiro = new Command()
     const skillsDest = join(kiroDir, 'skills/bepower-dev');
     await cp(join(paths.kiro, 'skills'), skillsDest, { recursive: true });
 
+    // Copy steering files as skill references (source of truth: kiro/steering/)
+    await cp(join(paths.kiro, 'steering'), join(skillsDest, 'steering-templates/references'), {
+      recursive: true,
+    });
+
     console.log('✓ bepower-setup agent installed globally');
     console.log(`\n  Agent:  ${join(kiroDir, 'agents/bepower-setup.json')}`);
     console.log(`  Prompt: ${join(kiroDir, 'prompts/bepower-setup.md')}`);

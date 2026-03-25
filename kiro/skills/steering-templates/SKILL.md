@@ -28,6 +28,9 @@ Adapt each file to the project:
 - `architecture.md` — Include only sections relevant to the project type (CDK, NestJS, serverless, etc.)
 
 ## References
+
+NOTE: references/ is populated at install time from kiro/steering/ (single source of truth).
+
 - Review `references/code-style.md` for the code style template
 - Review `references/build-tooling.md` for the build tooling template
 - Review `references/testing.md` for the testing template

@@ -20,7 +20,9 @@
   "license": "MIT",
   "author": "BePower",
   "type": "module",
-  "bin": "./dist/index.mjs",
+  "bin": {
+    "dev": "./dist/index.mjs"
+  },
   "files": [
     "dist/**/*",
     "configs/**/*",

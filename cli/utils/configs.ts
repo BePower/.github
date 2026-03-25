@@ -17,7 +17,7 @@ export interface ConfigFile {
   dest: string;
 }
 
-export const CONFIG_FILES: ConfigFile[] = [
+const BASE_CONFIG_FILES: ConfigFile[] = [
   { src: '_biome.json', dest: 'biome.json' },
   { src: 'editorconfig', dest: '.editorconfig' },
   { src: 'commitlint.config.ts', dest: 'commitlint.config.ts' },
@@ -25,10 +25,20 @@ export const CONFIG_FILES: ConfigFile[] = [
   { src: 'lockfile-lintrc.json', dest: '.lockfile-lintrc.json' },
   { src: 'npmpackagejsonlintrc.json', dest: '.npmpackagejsonlintrc.json' },
   { src: 'tsconfig.json', dest: 'tsconfig.json' },
-  { src: 'tsdown.config.ts', dest: 'tsdown.config.ts' },
-  { src: 'vitest.config.ts', dest: 'vitest.config.ts' },
   { src: 'npmrc', dest: '.npmrc' },
 ];
+
+export function getConfigFiles(options: { workspace?: boolean } = {}): ConfigFile[] {
+  const prefix = options.workspace ? 'workspace.' : '';
+  return [
+    ...BASE_CONFIG_FILES,
+    { src: `tsdown.${prefix}config.ts`, dest: 'tsdown.config.ts' },
+    { src: `vitest.${prefix}config.ts`, dest: 'vitest.config.ts' },
+  ];
+}
+
+/** @deprecated Use getConfigFiles() instead */
+export const CONFIG_FILES: ConfigFile[] = getConfigFiles();
 
 export async function copyConfig(
   file: ConfigFile,

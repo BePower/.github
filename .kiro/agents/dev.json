@@ -2,7 +2,7 @@
   "name": "dev",
   "description": "Agent for @bepower/dev - Shared configurations, golden configs & Kiro AI templates",
   "prompt": "file://../prompts/dev.md",
-  "resources": ["file://README.md", "file://.kiro/specs/**/*.md", "file://.kiro/steering/**/*.md"],
+  "resources": ["file://README.md", "file://.kiro/specs/**/*.md", "file://kiro/steering/**/*.md"],
   "tools": [
     "read",
     "write",
