@@ -1,0 +1,18 @@
+{
+  "name": "{{name}}",
+  "version": "0.0.0",
+  "description": "{{description}}",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {},
+  "keywords": [],
+  "author": "BePower",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 22"
+  },
+  "devDependencies": {}
+}

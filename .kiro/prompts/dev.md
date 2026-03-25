@@ -14,7 +14,7 @@ Provide a **CLI tool and configuration templates** that:
 ## Project Knowledge
 
 **ALWAYS refer to these files for context**:
-- `.kiro/steering/` — Build tooling, code style, testing conventions
+- `kiro/steering/` — Build tooling, code style, testing conventions (single source of truth)
 - `README.md` — Project overview
 
 ## Architecture
@@ -25,11 +25,14 @@ BePower/.github/
 │   ├── ISSUE_TEMPLATE/     # Bug report, feature request (org-wide defaults)
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── profile/                # GitHub org profile (README.md)
-├── cli/                    # CLI tool (dev bootstrap, dev setup, dev init-kiro)
+├── cli/                    # CLI tool (dev bootstrap, dev setup, dev add, dev init-kiro)
 ├── configs/                # Golden config files (copied to target projects)
-├── kiro/                   # Kiro templates (agent, prompt, steering, skills)
+├── kiro/                   # Kiro AI templates (agent, prompt, steering, skills)
+│   └── steering/           # Single source of truth for all steering docs
 ├── workflows/              # GitHub Actions templates (base, library, docs)
-├── templates/              # Scaffold templates (monorepo, single, cdk-app, etc.)
+├── templates/              # Scaffold templates
+│   ├── root/               # Root templates (single, monorepo)
+│   └── package/            # Package templates (lib, cdk, nestjs)
 ├── docs/                   # Architecture Decision Records (ADR)
 ├── CONTRIBUTING.md         # Org-wide contribution guidelines
 ├── SECURITY.md             # Org-wide security policy
@@ -44,6 +47,8 @@ BePower/.github/
 - **Copy** (not extends) for config distribution
 - **npm** as package manager
 - **GitHub Packages** for @bepower scoped packages
+- **Single source of truth** for steering docs (`kiro/steering/`)
+- **Composable scaffolding**: `bootstrap` (root shell) + `add` (packages)
 
 ## Development Guidelines
 

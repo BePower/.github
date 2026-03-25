@@ -19,9 +19,10 @@ Read these files (if they exist):
 
 ### Step 2: Classify
 Determine the project type:
-- **Monorepo library** (npm packages)
+- **Monorepo** (npm workspaces with multiple packages)
+- **Library** (single npm package)
 - **CDK application** (AWS CDK infrastructure)
-- **CDK library** (shared CDK constructs, like bep-cdk)
+- **NestJS microservice** (ECS-deployed NestJS service)
 - **Web app** (SvelteKit/Next.js/Nuxt)
 - **CLI tool** (like @bepower/dev itself)
 - **Other** (ask the user)

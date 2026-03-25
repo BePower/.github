@@ -25,17 +25,18 @@ vi.mock('node:child_process', () => ({
 }));
 
 describe('bootstrap command', () => {
-  it('should scaffold a single project with configs', async () => {
+  it('should scaffold a single lib project with configs', async () => {
     vi.spyOn(process, 'cwd').mockReturnValue(tempDir);
     vi.spyOn(console, 'log').mockImplementation(() => {});
 
     const { bootstrap } = await import('../cli/commands/bootstrap.js');
-    await bootstrap.parseAsync(['@bepower/test-lib'], { from: 'user' });
+    await bootstrap.parseAsync(['@bepower/test-lib', '-t', 'lib'], { from: 'user' });
 
     expect(await fileExists(join(tempDir, 'package.json'))).toBe(true);
     expect(await fileExists(join(tempDir, 'biome.json'))).toBe(true);
     expect(await fileExists(join(tempDir, 'lefthook.yml'))).toBe(true);
     expect(await fileExists(join(tempDir, '.npmrc'))).toBe(true);
+    expect(await fileExists(join(tempDir, 'src/index.ts'))).toBe(true);
 
     const gitignore = await readFile(join(tempDir, '.gitignore'), 'utf-8');
     expect(gitignore).toContain('dist/');
@@ -48,36 +49,56 @@ describe('bootstrap command', () => {
     expect(pkg.publishConfig).toEqual({ registry: 'https://npm.pkg.github.com' });
   });
 
-  it('should exclude tsdown and tsconfig for cdk-app type', async () => {
+  it('should scaffold a cdk project without tsdown', async () => {
     vi.spyOn(process, 'cwd').mockReturnValue(tempDir);
     vi.spyOn(console, 'log').mockImplementation(() => {});
 
     const { bootstrap } = await import('../cli/commands/bootstrap.js');
-    await bootstrap.parseAsync(['@bepower/my-cdk', '-t', 'cdk-app'], { from: 'user' });
+    await bootstrap.parseAsync(['@bepower/my-cdk', '-t', 'cdk'], { from: 'user' });
 
     const pkg = JSON.parse(await readFile(join(tempDir, 'package.json'), 'utf-8'));
     expect(pkg.devDependencies).not.toHaveProperty('tsdown');
     expect(pkg.devDependencies).not.toHaveProperty('@tsconfig/node22');
+    expect(pkg.dependencies).toHaveProperty('aws-cdk-lib');
 
     const gitignore = await readFile(join(tempDir, '.gitignore'), 'utf-8');
     expect(gitignore).toContain('cdk.out');
 
-    expect(pkg.publishConfig).toBeUndefined();
+    expect(await fileExists(join(tempDir, 'bin/app.ts'))).toBe(true);
+    expect(await fileExists(join(tempDir, 'cdk.json'))).toBe(true);
   });
 
-  it('should handle name without scope', async () => {
+  it('should scaffold a monorepo shell', async () => {
     vi.spyOn(process, 'cwd').mockReturnValue(tempDir);
     vi.spyOn(console, 'log').mockImplementation(() => {});
 
     const { bootstrap } = await import('../cli/commands/bootstrap.js');
-    await bootstrap.parseAsync(['my-tool'], { from: 'user' });
+    await bootstrap.parseAsync(['@bepower/my-mono', '--monorepo'], { from: 'user' });
 
     const pkg = JSON.parse(await readFile(join(tempDir, 'package.json'), 'utf-8'));
-    expect(pkg.homepage).toBe('https://github.com/BePower/my-tool#readme');
-    expect(pkg.repository.url).toBe('git+https://github.com/BePower/my-tool.git');
+    expect(pkg.workspaces).toEqual(['packages/*']);
+    expect(pkg.private).toBe(true);
+
+    expect(await fileExists(join(tempDir, 'tsdown.config.ts'))).toBe(true);
+    const tsdown = await readFile(join(tempDir, 'tsdown.config.ts'), 'utf-8');
+    expect(tsdown).toContain('workspace: true');
   });
 
-  it('should exit with error for invalid type', async () => {
+  it('should require --template for single projects', async () => {
+    vi.spyOn(process, 'exit').mockImplementation(() => {
+      throw new Error('process.exit');
+    });
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    const { bootstrap } = await import('../cli/commands/bootstrap.js');
+    await expect(bootstrap.parseAsync(['@bepower/test'], { from: 'user' })).rejects.toThrow(
+      'process.exit',
+    );
+
+    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('--template is required'));
+  });
+
+  it('should exit with error for invalid template', async () => {
     vi.spyOn(process, 'exit').mockImplementation(() => {
       throw new Error('process.exit');
     });
@@ -88,6 +109,8 @@ describe('bootstrap command', () => {
       bootstrap.parseAsync(['@bepower/test', '-t', 'invalid'], { from: 'user' }),
     ).rejects.toThrow('process.exit');
 
-    expect(console.error).toHaveBeenCalledWith(expect.stringContaining('Invalid type: invalid'));
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('Invalid template: invalid'),
+    );
   });
 });

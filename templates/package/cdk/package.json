@@ -4,17 +4,6 @@
   "description": "{{description}}",
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf dist",
-    "lint": "concurrently npm:lint:* --prefixColors auto",
-    "lint:engines": "ls-engines",
-    "lint:format": "biome check --write",
-    "lint:lockfile": "lockfile-lint",
-    "lint:package": "npmPkgJsonLint .",
-    "lint:sort_package": "sort-package-json \"package.json\"",
-    "lint:typecheck": "tsc --noEmit",
-    "prepare": "lefthook install",
-    "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
     "cdk": "cdk",
     "cdk:synth": "cdk synth",
     "cdk:diff": "cdk diff",
@@ -23,6 +12,15 @@
   "keywords": [],
   "author": "BePower",
   "license": "MIT",
+  "homepage": "{{homepage}}",
+  "bugs": {
+    "url": "{{bugs}}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "{{repository}}",
+    "directory": "{{path}}"
+  },
   "engines": {
     "node": ">= 22"
   },

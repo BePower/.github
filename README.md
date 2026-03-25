@@ -30,19 +30,37 @@ npm install -g @bepower/dev
 Scaffold a new project with standard configuration.
 
 ```bash
-dev bootstrap @bepower/my-lib                      # Single package (default)
-dev bootstrap @bepower/my-lib -t monorepo           # Monorepo with workspaces
-dev bootstrap @bepower/my-infra -t cdk-app          # CDK application
-dev bootstrap @bepower/my-constructs -t cdk-lib     # CDK library
-dev bootstrap @bepower/my-service -t ecs-microservice  # NestJS ECS microservice
+# Single projects (--template required)
+dev bootstrap @bepower/my-lib -t lib              # npm library
+dev bootstrap @bepower/my-infra -t cdk            # CDK application
+dev bootstrap @bepower/my-service -t nestjs        # NestJS ECS microservice
+
+# Monorepo (shell only, then use `dev add`)
+dev bootstrap @bepower/my-project --monorepo
 ```
 
 What it does:
-1. Copies the template scaffold into the current directory
-2. Applies golden configs (biome, tsconfig, vitest, lefthook, etc.)
-3. Merges devDependencies and scripts into `package.json`
-4. Copies base GitHub Actions workflows
-5. Runs `npm install` and creates initial git commit
+1. Copies the root template (single or monorepo shell)
+2. For single projects: overlays the package template (lib/cdk/nestjs)
+3. Applies golden configs (biome, tsconfig, vitest, lefthook, etc.)
+4. Merges devDependencies and scripts into `package.json`
+5. Copies base GitHub Actions workflows
+6. Runs `npm install` and creates initial git commit
+
+### `dev add <path> --template <type>`
+
+Add a package to a monorepo.
+
+```bash
+dev add packages/shared -t lib                    # npm library package
+dev add packages/infra -t cdk                     # CDK infrastructure
+dev add packages/backend -t nestjs                # NestJS microservice
+```
+
+What it does:
+1. Copies the package template into the specified path
+2. Updates root `package.json` workspaces if needed
+3. Sets up package.json with correct name, repository, and directory
 
 ### `dev setup`
 
@@ -55,9 +73,10 @@ dev setup --force    # Overwrite existing configs with latest golden versions
 ```
 
 What it does:
-1. Copies config files (only if they don't already exist, unless `--force`)
-2. Merges devDependencies and scripts into `package.json`
-3. Adds base GitHub Actions workflows
+1. Detects monorepo (workspaces) and selects appropriate config variants
+2. Copies config files (only if they don't already exist, unless `--force`)
+3. Merges devDependencies and scripts into `package.json`
+4. Adds base GitHub Actions workflows
 
 ### `dev init-kiro`
 
@@ -75,10 +94,10 @@ These files are copied (not extended) to target projects:
 |--------|-------------|
 | `biome.json` | Biome linter + formatter (single quotes, 100 width, import sorting) |
 | `tsconfig.json` | Extends `@tsconfig/node22` |
-| `vitest.config.ts` | Vitest + v8 coverage |
+| `vitest.config.ts` | Vitest + v8 coverage (workspace variant for monorepos) |
 | `lefthook.yml` | Git hooks (pre-commit pipeline, commit-msg) |
 | `commitlint.config.ts` | Conventional commits |
-| `tsdown.config.ts` | Build with tsdown (ESM + DTS + sourcemaps) |
+| `tsdown.config.ts` | Build with tsdown (workspace variant for monorepos) |
 | `.editorconfig` | Editor settings |
 | `.lockfile-lintrc.json` | Lockfile security |
 | `.npmpackagejsonlintrc.json` | package.json validation |
@@ -95,21 +114,19 @@ BePower/.github/
 ├── profile/
 │   └── README.md                # GitHub org profile
 │
-├── cli/                         # CLI source (dev bootstrap, setup, init-kiro)
-│   ├── commands/                # Command implementations
+├── cli/                         # CLI source
+│   ├── commands/                # bootstrap, setup, add, init-kiro
 │   └── utils/                   # Shared utilities (configs, paths, templates)
 ├── configs/                     # Golden config files (copied to target projects)
 ├── kiro/                        # Kiro AI templates (agent, prompt, steering, skills)
+│   └── steering/                # Single source of truth for steering docs
 ├── workflows/                   # GitHub Actions templates (distributed by dev setup)
 │   ├── base/                    # CI, PR, security, dependabot
 │   ├── library/                 # npm publish
 │   └── docs/                    # Documentation site
 ├── templates/                   # Scaffold templates
-│   ├── single/                  # Single npm package
-│   ├── monorepo/                # npm workspaces
-│   ├── cdk-app/                 # AWS CDK application
-│   ├── cdk-lib/                 # AWS CDK construct library
-│   └── ecs-microservice/        # NestJS ECS microservice
+│   ├── root/                    # Root templates (single, monorepo)
+│   └── package/                 # Package templates (lib, cdk, nestjs)
 ├── docs/                        # Architecture Decision Records
 │
 ├── CONTRIBUTING.md              # Org-wide contribution guidelines
@@ -121,16 +138,17 @@ BePower/.github/
 ### How It Works
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                    @bepower/dev CLI                      │
-├──────────────┬──────────────────┬───────────────────────┤
-│  bootstrap   │      setup       │      init-kiro        │
-│              │                  │                       │
-│  template/   │  configs/        │  kiro/                │
-│  + configs/  │  + workflows/    │  → ~/.kiro/           │
-│  + workflows │  + package.json  │                       │
-│  → new dir   │  → existing dir  │                       │
-└──────────────┴──────────────────┴───────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                      @bepower/dev CLI                        │
+├───────────────┬──────────┬──────────────┬────────────────────┤
+│   bootstrap   │   add    │    setup     │     init-kiro      │
+│               │          │              │                    │
+│  root/        │ package/ │  configs/    │  kiro/             │
+│  + package/   │ → path   │  + workflows │  → ~/.kiro/        │
+│  + configs/   │          │  + pkg.json  │                    │
+│  + workflows  │          │              │                    │
+│  → new dir    │          │  → existing  │                    │
+└───────────────┴──────────┴──────────────┴────────────────────┘
 ```
 
 ## Stack

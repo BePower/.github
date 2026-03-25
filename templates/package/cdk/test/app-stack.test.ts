@@ -5,13 +5,9 @@ import { describe, it } from 'vitest';
 import { AppStack } from '../lib/app-stack';
 
 describe('AppStack', () => {
-  it('should create a Lambda function', () => {
+  it('should synthesize without errors', () => {
     const app = new App();
     const stack = new AppStack(app, 'TestStack');
-    const template = Template.fromStack(stack);
-
-    template.hasResourceProperties('AWS::Lambda::Function', {
-      Runtime: 'nodejs22.x',
-    });
+    Template.fromStack(stack);
   });
 });

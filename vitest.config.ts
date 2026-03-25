@@ -2,12 +2,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    exclude: [
-      'node_modules/**',
-      'templates/cdk-app/**',
-      'templates/cdk-lib/**',
-      'templates/ecs-microservice/**',
-    ],
+    exclude: ['node_modules/**', 'templates/package/cdk/**', 'templates/package/nestjs/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'json-summary'],

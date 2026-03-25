@@ -1,10 +1,13 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
+
 import { Command } from '@commander-js/extra-typings';
 
 import {
-  CONFIG_FILES,
   copyConfig,
   copyWorkflows,
   fileExists,
+  getConfigFiles,
   mergePackageJson,
 } from '../utils/configs.js';
 import { DEV_DEPENDENCIES, SCRIPTS } from '../utils/constants.js';
@@ -26,7 +29,11 @@ export const setup = new Command()
       console.log('Force mode: overwriting existing configs\n');
     }
 
-    for (const file of CONFIG_FILES) {
+    const pkg = JSON.parse(await readFile(join(cwd, 'package.json'), 'utf-8'));
+    const isWorkspace = Array.isArray(pkg.workspaces);
+    const configFiles = getConfigFiles({ workspace: isWorkspace });
+
+    for (const file of configFiles) {
       const copied = await copyConfig(file, cwd, force);
       if (copied) {
         console.log(force ? `  ↻ ${file.dest} (updated)` : `  ✓ ${file.dest}`);

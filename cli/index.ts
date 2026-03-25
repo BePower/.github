@@ -6,6 +6,7 @@ import { fileURLToPath } from 'node:url';
 
 import { Command } from '@commander-js/extra-typings';
 
+import { add } from './commands/add.js';
 import { bootstrap } from './commands/bootstrap.js';
 import { initKiro } from './commands/init-kiro.js';
 import { setup } from './commands/setup.js';
@@ -24,6 +25,7 @@ const program = new Command()
 
 program.addCommand(bootstrap);
 program.addCommand(setup);
+program.addCommand(add);
 program.addCommand(initKiro);
 
 program.parse();
