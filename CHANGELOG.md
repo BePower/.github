@@ -1,6 +1,17 @@
 # Changelog
 
 
+
+## [1.2.0] - 2026-03-26
+
+### 🐛 Bug Fixes
+
+- fix(cli): :bug: fix asset path resolution for installed package
+
+### ### ci
+
+- ci: :bug: fix bonvoy github plugin config
+
 ## [1.1.0] - 2026-03-25
 
 ### ✨ Features
