@@ -2,5 +2,6 @@
   "path": "package-lock.json",
   "type": "npm",
   "validate-https": true,
-  "allowed-hosts": ["npm"]
+  "allowed-hosts": ["npm"],
+  "allowed-urls": ["https://npm.pkg.github.com/@bepower/*"]
 }
