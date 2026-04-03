@@ -75,6 +75,19 @@ bin/app.ts → PipelineStack({ account: DEPLOYMENT, destinationAccount, branch }
 - GitHub token + Docker credentials from SecretsManager
 - Slack/Teams notifications, CodeScan (SonarQube) pre-step
 
+### CodeBuild Node.js version
+
+`STANDARD_7_0` defaults to Node.js 18. Override via `partialBuildSpec` to match the project's engine requirement:
+
+```typescript
+codeBuildDefaults: {
+  partialBuildSpec: BuildSpec.fromObject({
+    phases: { install: { 'runtime-versions': { nodejs: 24 } } },
+  }),
+  buildEnvironment: { buildImage: LinuxBuildImage.STANDARD_7_0 },
+}
+```
+
 ## Cross-Stack Communication
 
 | Mechanism | When |
