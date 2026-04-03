@@ -43,6 +43,10 @@ npm run lint:engines       # Validate engine compatibility
 - Pre-commit: biome → lockfile → package-lint → sort → build → typecheck → test
 - Commit-msg: commitlint validation
 - Built-in staging support (`stage_fixed: true`)
+- **CI guard**: the `prepare` script must skip lefthook in CI environments:
+  ```json
+  "prepare": "[ \"$CI\" = 'true' ] || lefthook install"
+  ```
 
 ## Package Manager
 

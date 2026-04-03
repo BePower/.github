@@ -28,7 +28,7 @@ export const SCRIPTS: Record<string, string> = {
   'lint:package': 'npmPkgJsonLint .',
   'lint:sort_package': 'sort-package-json "package.json"',
   'lint:typecheck': 'tsc --noEmit',
-  prepare: 'lefthook install',
+  prepare: '[ "$CI" = \'true\' ] || lefthook install',
   test: 'vitest run',
   'test:coverage': 'vitest run --coverage',
 };
