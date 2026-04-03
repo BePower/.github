@@ -2,6 +2,24 @@
 
 
 
+
+## [1.2.1] - 2026-04-03
+
+### 🐛 Bug Fixes
+
+- fix: :bug: skip lefthook install in CI environments
+- fix: :bug: skip lefthook install in CI
+
+### 📚 Documentation
+
+- docs(kiro): :wrench: document CodeBuild Node.js runtime override best practice
+- docs(kiro): :memo: remove NestedStack, add Route53MainStack best practices
+
+### ### chore
+
+- chore: Update allowed-hosts in lockfile-lintrc.json
+- chore: Add allowed-urls to lockfile-lintrc.json
+
 ## [1.2.0] - 2026-03-26
 
 ### 🐛 Bug Fixes
