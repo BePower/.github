@@ -45,7 +45,7 @@ npm run lint:engines       # Validate engine compatibility
 - Built-in staging support (`stage_fixed: true`)
 - **CI guard**: the `prepare` script must skip lefthook in CI environments:
   ```json
-  "prepare": "[ \"$CI\" = 'true' ] || lefthook install"
+  "prepare": "[ -n \"$CI\" ] || [ -n \"$CODEBUILD_BUILD_ID\" ] || lefthook install"
   ```
 
 ## Package Manager
