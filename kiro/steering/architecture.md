@@ -7,11 +7,12 @@ All CDK projects extend base classes from `@bepower/bep-cdk-lib`:
 ```
 BaseStack (abstract)
   ├── Stack          → application stacks (VPC, stage, isProd)
-  ├── NestedStack    → sub-stacks in same account
   └── PipelineStack  → CI/CD (branch, destinationAccount, notifications)
 
 Stage                → groups stacks per environment
 ```
+
+**Never use NestedStack** — always use separate `Stack` instances inside the `Stage`.
 
 Every stack constructor receives: `projectName`, `departments[]`, `level`, `scope`, `id`, `props`.
 ABAC tagging (Project, Department, Level, Environment, EnvironmentName) is automatic.
@@ -32,10 +33,32 @@ class MyStage extends Stage {
 }
 ```
 
+Key rules:
 - `commonProps` shared across all stacks
 - Cross-account stacks allowed in same stage (e.g., DNS on BEPOWER_MAIN)
-- Dependencies between stacks via constructor props
+- Dependencies between stacks via `addDependency()` or constructor props
 - `isFirstStage`: first stage creates shared resources, subsequent stages import
+- Every stack gets an explicit `stackName` (e.g., `${PROJECT_NAME}Resource${capitalCase(stage)}`)
+
+## Route53MainStack (DNS)
+
+Projects with custom domains must include a `Route53MainStack` inside the Stage, deployed cross-account on `Account.BEPOWER_MAIN`:
+
+```typescript
+import { Route53Stack } from '@bepower/bep-cdk';
+import { Route53MainStack, Account, Department, Level } from '@bepower/bep-cdk-lib';
+
+new Route53MainStack(PROJECT_NAME, [Department.ItDelivery], Level.Middle, this, 'Route53MainStack', {
+  ...commonProps,
+  account: Account.BEPOWER_MAIN,
+  env: Account.BEPOWER_MAIN.env,
+  parentDomainName: Route53Stack.getParentDomainName(this.accountBep),
+  parentRecordName,
+  recordName,
+});
+```
+
+Use `Route53Stack.getDomainName()` and `Route53Stack.getParentDomainName()` from `@bepower/bep-cdk` to compute domain names.
 
 ## Pipeline Pattern
 

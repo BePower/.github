@@ -14,7 +14,8 @@ Check:
 Based on what the stack manages:
 - **Application stack** → extends `Stack` (needs VPC, stage, isProd)
 - **Pipeline stack** → extends `PipelineStack` (needs branch, destinationAccount)
-- **Nested stack** → extends `NestedStack` (sub-stack in same account)
+
+**Never use NestedStack** — always use separate `Stack` instances inside the `Stage`.
 
 ## 3. Create stack file
 
