@@ -3,9 +3,15 @@ name: barrel-export
 description: Auto-update barrel index.ts when a new source file is created in a package.
 trigger: fileCreated
 fileMatch: "**/packages/*/src/**/*.ts"
+runtime: ide
 ---
 
 # Barrel Export Sync
+
+> `runtime: ide` — this is an editing convenience that fires on an IDE
+> `fileCreated` event. It is meaningless in an autonomous/headless run (no editor
+> events), so `init-kiro` should NOT install it for headless agents. See the
+> `runtime` filtering note in `README.md`.
 
 When a new `.ts` file is created under `packages/*/src/`:
 

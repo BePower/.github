@@ -23,6 +23,11 @@ export const initKiro = new Command()
       join(paths.kiro, 'agents/functional-analyst.json'),
       join(kiroDir, 'agents/functional-analyst.json'),
     );
+    await cp(
+      join(paths.kiro, 'agents/upgrade-guardian.json'),
+      join(kiroDir, 'agents/upgrade-guardian.json'),
+    );
+    await cp(join(paths.kiro, 'agents/rev-eng.json'), join(kiroDir, 'agents/rev-eng.json'));
 
     // Prompts
     await mkdir(join(kiroDir, 'prompts'), { recursive: true });
@@ -34,6 +39,11 @@ export const initKiro = new Command()
       join(paths.kiro, 'prompts/functional-analyst.md'),
       join(kiroDir, 'prompts/functional-analyst.md'),
     );
+    await cp(
+      join(paths.kiro, 'prompts/upgrade-guardian.md'),
+      join(kiroDir, 'prompts/upgrade-guardian.md'),
+    );
+    await cp(join(paths.kiro, 'prompts/rev-eng.md'), join(kiroDir, 'prompts/rev-eng.md'));
 
     // Resources (functional-analyst templates)
     await cp(join(paths.kiro, 'resources'), join(kiroDir, 'resources'), { recursive: true });
@@ -61,4 +71,6 @@ export const initKiro = new Command()
     console.log('\nAvailable agents:');
     console.log('  • bepower-setup — Generate .kiro/ config for a project');
     console.log('  • functional-analyst — Interactive requirements gathering (Italian)');
+    console.log('  • upgrade-guardian — Assess dependency/framework upgrade safety (read-only)');
+    console.log('  • rev-eng — Reverse-engineer a web app API via Playwright (read-only)');
   });

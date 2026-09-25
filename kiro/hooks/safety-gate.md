@@ -3,9 +3,15 @@ name: safety-gate
 description: Block dangerous shell commands before execution.
 trigger: preToolUse
 toolName: shell
+runtime: any
 ---
 
 # Safety Gate
+
+> `runtime: any` — this guard applies in every runtime (IDE and autonomous
+> KiroCrew alike). It is intentionally mirrored by the `deniedCommands` in each
+> agent JSON (defense in depth): the hook catches it at the event layer, the
+> agent config catches it at the tool layer.
 
 Before executing any shell command, verify it does NOT:
 
