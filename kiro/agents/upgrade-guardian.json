@@ -44,7 +44,7 @@
         ".*npm publish.*",
         ".*gh pr create.*",
         ".*gh pr merge.*",
-        ".*npm install.*--save.*",
+        ".*npm (install|i|add).*(-S|-D|-O|-E|--save).*",
         ".*rm -rf.*"
       ]
     }
