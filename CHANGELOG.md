@@ -6,6 +6,34 @@
 
 
 
+## [3.0.0](https://github.com/BePower/.github/compare/dev-2.0.0...dev-3.0.0) (2026-10-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* **cli:** `dev bootstrap` no longer runs `git init` and creates an initial commit. Initialize the repo manually after bootstrapping.
+
+### Features
+
+* **cli:** :sparkles: improve config management and add diff command ([07cec2d](https://github.com/BePower/.github/commit/07cec2da8cbf57a896e48c6b43a9b7670d4fe15f))
+* **kiro:** :sparkles: add upgrade-guardian and generic rev-eng agents ([e3e92ad](https://github.com/BePower/.github/commit/e3e92ad17a4738e0b33cf87b35e3a15965bdfc45))
+* **kiro:** :sparkles: enhance templates from production project ([dd34f64](https://github.com/BePower/.github/commit/dd34f64492902cc4b900ac6ae285186ac2073690))
+* **kiro:** :sparkles: install functional-analyst globally and add ([89619ae](https://github.com/BePower/.github/commit/89619aec33d8fb25e74a5d004560f3b1ba236704))
+* **kiro:** add upgrade-guardian and generic rev-eng agents ([80999e7](https://github.com/BePower/.github/commit/80999e74027c79740bd21dd273d83ef9bad29996))
+* **skills:** :sparkles: add testlist.md to spec-templates workflow ([9df3a2f](https://github.com/BePower/.github/commit/9df3a2fc6f581d38cdeef0590c006a8ab5150223))
+
+
+### Bug Fixes
+
+* **cli:** :adhesive_bandage: handle init-kiro copy failures gracefully ([5542cec](https://github.com/BePower/.github/commit/5542cecac28916d622683ab0953c1487e06c6b0d))
+* **kiro:** :lock: broaden upgrade-guardian npm-save deny pattern ([c71886b](https://github.com/BePower/.github/commit/c71886bb342ed70d4ef7f4d4214912115a288abd))
+
+
+### Performance Improvements
+
+* **deps:** bump commander & @commander-js/extra-typings to 15.0.0 ([#6](https://github.com/BePower/.github/issues/6)) ([67e8f49](https://github.com/BePower/.github/commit/67e8f49f3d8ddfef7ee4c2b9807c2d33b15939ab))
+* **deps:** bump sort-package-json from 3.6.1 to 4.0.0 ([#15](https://github.com/BePower/.github/issues/15)) ([4add251](https://github.com/BePower/.github/commit/4add251717adea9c40674fc7157b3a5fd030914d))
+
 ## [2.0.0](https://github.com/BePower/.github/compare/dev-1.4.0...dev-2.0.0) (2026-05-16)
 
 

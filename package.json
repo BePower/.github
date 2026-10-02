@@ -1,6 +1,6 @@
 {
   "name": "@bepower/dev",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Configurations and tools for developers (VERY opinionated)",
   "keywords": [
     "cli",
