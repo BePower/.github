@@ -6,6 +6,14 @@
 
 
 
+## [3.1.1](https://github.com/BePower/.github/compare/dev-3.1.0...dev-3.1.1) (2026-10-02)
+
+
+### Bug Fixes
+
+* **agents:** :bug: make AGENTS.md an optional resource via glob ([27621db](https://github.com/BePower/.github/commit/27621db45305244c046e059194fe4dc48d74080a))
+* **agents:** make AGENTS.md an optional resource via glob ([1ff7765](https://github.com/BePower/.github/commit/1ff7765a29010c99b4f92f9e6680fd5944b0e18f))
+
 ## [3.1.0](https://github.com/BePower/.github/compare/dev-3.0.0...dev-3.1.0) (2026-10-02)
 
 
