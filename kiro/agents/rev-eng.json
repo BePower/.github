@@ -4,7 +4,7 @@
   "prompt": "file://../prompts/rev-eng.md",
   "resources": [
     "file://README.md",
-    "file://AGENTS.md",
+    "file://AGENTS*.md",
     "file://package.json",
     "file://.env.example",
     "file://.kiro/steering/**/*.md",
