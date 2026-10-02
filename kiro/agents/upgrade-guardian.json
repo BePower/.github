@@ -4,7 +4,7 @@
   "prompt": "file://../prompts/upgrade-guardian.md",
   "resources": [
     "file://README.md",
-    "file://AGENTS.md",
+    "file://AGENTS*.md",
     "file://package.json",
     "file://.kiro/steering/**/*.md"
   ],
