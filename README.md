@@ -97,11 +97,40 @@ Useful for detecting config drift without modifying anything. To apply updates, 
 
 ### `dev init-kiro`
 
-Install the `bepower-setup` Kiro agent globally for AI-assisted project configuration.
+Install the BePower Kiro agents globally (into `~/.kiro/`) for AI-assisted work across every project: the four agents, their prompts, workflow skills, hooks and steering docs.
 
 ```bash
 dev init-kiro
 ```
+
+At the end it offers an interactive opt-in — **"Also initialize KiroCrew? (y/N)"** — which, if accepted, runs `dev init-crew` for you. The prompt is skipped in non-interactive shells (CI), so the command never blocks a pipeline.
+
+What it installs:
+1. `~/.kiro/agents/*.json` — the four agent specs (also valid KiroCrew templates)
+2. `~/.kiro/prompts/*.md` — their system prompts
+3. `~/.kiro/skills/` — workflow skills (incl. the `upgrade-guardian` skill)
+4. `~/.kiro/hooks/` — safety-gate, barrel-export, etc.
+5. `~/.kiro/steering/` — shared steering docs
+
+### `dev init-crew`
+
+Register the installed agents as **KiroCrew members** so they appear in the dashboard's agent picker. Run it after `dev init-kiro`, or let the `init-kiro` prompt call it.
+
+```bash
+dev init-crew
+```
+
+- **Idempotent** — re-running skips members that already exist.
+- **Degrades gracefully** — if the `kirocrew` binary is not installed, it prints a note and exits cleanly instead of failing (so IDE-only users are unaffected).
+
+> **Installing from GitHub Packages.** `@bepower/dev` is published to GitHub Packages (not npmjs.org). To install the CLI you need the `@bepower` scope mapped to the GitHub registry and a token with `read:packages`:
+> ```bash
+> npm config set @bepower:registry https://npm.pkg.github.com
+> npm config set //npm.pkg.github.com/:_authToken='${GITHUB_PACKAGES_TOKEN}'
+> export GITHUB_PACKAGES_TOKEN="$(gh auth token)"   # reuses your gh login
+> npm install -g @bepower/dev
+> ```
+> Using `${GITHUB_PACKAGES_TOKEN}` keeps the token out of `~/.npmrc` on disk — it is read from the environment at install time.
 
 ## Golden Configs
 
@@ -163,12 +192,51 @@ Typical flow: `plan product` → `plan eng` → implement → `code review` → 
 
 ### Global Agents
 
-These agents are distributed by `dev init-kiro` for use across all BePower projects:
+These agents are distributed by `dev init-kiro` for use across all BePower projects. Each is read-only by default — they analyze and propose, but never commit, push, publish, or open PRs (enforced by `deniedCommands` in the spec and the `safety-gate` hook):
 
 | Agent | Description |
 |-------|-------------|
 | `bepower-setup` | Analyzes a project and generates optimal `.kiro/` configuration (steering, agent, prompt, skills) |
 | `functional-analyst` | Interactive functional analysis — collects requirements through conversation, produces approval docs and technical briefs (Italian-first) |
+| `upgrade-guardian` | Assesses the safety of a dependency/framework upgrade in an isolated worktree and returns a reasoned **LOW/MEDIUM/HIGH** risk verdict with real breaking-change analysis, project impact and verification |
+| `rev-eng` | Reverse-engineers a target web app's internal API via Playwright and documents it for a TypeScript client |
+
+## Using the Agents
+
+Once installed, the agents live in `~/.kiro/agents/` and can be driven from **two runtimes** that share the same specs.
+
+### In kiro-cli / IDE
+
+Pass the agent name to `kiro-cli chat`:
+
+```bash
+# in the repo you want it to work on
+cd ~/projects/bepower/bep-cdk
+kiro-cli chat --agent upgrade-guardian
+```
+
+Then start the conversation by telling it what to assess, e.g.:
+
+> _"Assess the Dependabot branch that bumps `datadog-cdk-constructs-v2` to 5.2.0 — is it safe to merge?"_
+
+The agent reads the project context (`README.md`, `AGENTS.md` if present, `package.json`, steering docs), does its analysis, and reports back. It will not mutate the repo.
+
+### In the KiroCrew dashboard
+
+After `dev init-crew` the agents appear as **members in the dashboard's agent picker**. Open a new chat, pick `upgrade-guardian` (or `rev-eng`), and start the conversation the same way — the result (e.g. an upgrade safety report) is rendered inline, with each member keeping its own dedicated memory.
+
+### How to start the conversation
+
+These agents are **task-driven**, not chatty — open with the concrete thing you want assessed:
+
+| Agent | A good opening message |
+|-------|------------------------|
+| `upgrade-guardian` | _"Assess upgrading `<package>` from `<x>` to `<y>` in this repo. Is it safe to merge?"_ |
+| `rev-eng` | _"Reverse-engineer the API of `<url>` and document the endpoints for a TypeScript client."_ |
+| `bepower-setup` | _"Analyze this project and generate the `.kiro/` configuration for it."_ |
+| `functional-analyst` | _"Raccogliamo i requisiti per `<feature>`."_ (Italian-first) |
+
+The agent does the rest — reads context, analyzes, and returns a verdict or document. For `upgrade-guardian` the output is a safety report with a LOW/MEDIUM/HIGH verdict and a **suggested** (never executed) commit message; you decide whether to apply it.
 
 ## Architecture
 
