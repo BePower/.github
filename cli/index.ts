@@ -9,6 +9,7 @@ import { Command } from '@commander-js/extra-typings';
 import { add } from './commands/add.js';
 import { bootstrap } from './commands/bootstrap.js';
 import { diff } from './commands/diff.js';
+import { initCrew } from './commands/init-crew.js';
 import { initKiro } from './commands/init-kiro.js';
 import { setup } from './commands/setup.js';
 
@@ -29,5 +30,6 @@ program.addCommand(setup);
 program.addCommand(add);
 program.addCommand(diff);
 program.addCommand(initKiro);
+program.addCommand(initCrew);
 
 program.parse();
