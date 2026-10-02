@@ -6,6 +6,13 @@
 
 
 
+## [3.1.0](https://github.com/BePower/.github/compare/dev-3.0.0...dev-3.1.0) (2026-10-02)
+
+
+### Features
+
+* **cli:** add dev init-crew command and KiroCrew opt-in in init-kiro ([#18](https://github.com/BePower/.github/issues/18)) ([90d4185](https://github.com/BePower/.github/commit/90d41853fe4e5020683b1488b36f2537c7ad75d1))
+
 ## [3.0.0](https://github.com/BePower/.github/compare/dev-2.0.0...dev-3.0.0) (2026-10-02)
 
 
