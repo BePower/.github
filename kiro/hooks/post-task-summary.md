@@ -1,10 +1,21 @@
 ---
 name: post-task-summary
-description: Summarize changes and suggest a commit message when the agent finishes a task.
+description: "[DEPRECATED] Summarize changes and suggest a commit message when the agent finishes a task."
 trigger: agentStop
+runtime: any
+deprecated: true
+superseded_by: "KiroCrew 0.7 native end-of-task summary — keeping this hook produces a duplicate summary."
 ---
 
-# Post-Task Summary
+# Post-Task Summary — DEPRECATED
+
+> **DEPRECATED (kept for review, not auto-removed).**
+> KiroCrew 0.7 emits a native end-of-task summary, so this hook is redundant and
+> would produce a second, duplicate summary. Recommendation: archive.
+
+---
+
+## Original behavior (for reference)
 
 When finishing a task, provide:
 

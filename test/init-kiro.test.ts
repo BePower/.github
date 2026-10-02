@@ -36,10 +36,14 @@ describe('init-kiro command', () => {
     // Agents
     expect(await fileExists(join(kiroDir, 'agents/bepower-setup.json'))).toBe(true);
     expect(await fileExists(join(kiroDir, 'agents/functional-analyst.json'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'agents/upgrade-guardian.json'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'agents/rev-eng.json'))).toBe(true);
 
     // Prompts
     expect(await fileExists(join(kiroDir, 'prompts/bepower-setup.md'))).toBe(true);
     expect(await fileExists(join(kiroDir, 'prompts/functional-analyst.md'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'prompts/upgrade-guardian.md'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'prompts/rev-eng.md'))).toBe(true);
 
     // Resources
     expect(await fileExists(join(kiroDir, 'resources/functional-analyst'))).toBe(true);
