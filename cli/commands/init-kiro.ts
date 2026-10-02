@@ -1,10 +1,28 @@
 import { cp, mkdir } from 'node:fs/promises';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import { createInterface } from 'node:readline/promises';
 
 import { Command } from '@commander-js/extra-typings';
 
 import { paths } from '../utils/paths.js';
+import { bootstrapCrew } from './init-crew.js';
+
+/**
+ * Ask a yes/no question on an interactive TTY. In a non-interactive context
+ * (CI, piped stdin) there is nobody to answer, so default to `false` and skip
+ * the prompt rather than blocking.
+ */
+async function confirm(question: string): Promise<boolean> {
+  if (!process.stdin.isTTY) return false;
+  const rl = createInterface({ input: process.stdin, output: process.stdout });
+  try {
+    const answer = (await rl.question(`${question} `)).trim().toLowerCase();
+    return answer === 'y' || answer === 'yes';
+  } finally {
+    rl.close();
+  }
+}
 
 export const initKiro = new Command()
   .name('init-kiro')
@@ -74,6 +92,18 @@ export const initKiro = new Command()
       console.log('  • functional-analyst — Interactive requirements gathering (Italian)');
       console.log('  • upgrade-guardian — Assess dependency/framework upgrade safety (read-only)');
       console.log('  • rev-eng — Reverse-engineer a web app API via Playwright (read-only)');
+
+      // Offer to also wire these agents into KiroCrew (dashboard members).
+      // Only prompts on an interactive TTY; non-interactive runs skip silently.
+      const wantsCrew = await confirm('\nAlso initialize KiroCrew with these agents? (y/N)');
+      if (wantsCrew) {
+        console.log('');
+        await bootstrapCrew();
+      } else {
+        console.log(
+          '\nTip: run `dev init-crew` later to register these agents as KiroCrew members.',
+        );
+      }
     } catch (error) {
       console.error(
         `✗ Failed to install Kiro agents: ${error instanceof Error ? error.message : String(error)}`,
