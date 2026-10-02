@@ -53,7 +53,14 @@ export async function bootstrapCrew(): Promise<boolean> {
     return false;
   }
 
-  const present = await existingMembers();
+  let present: Set<string>;
+  try {
+    present = await existingMembers();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`✗ Could not read existing crew members (\`kirocrew agent list\`): ${message}`);
+    return false;
+  }
 
   for (const agent of CREW_AGENTS) {
     if (present.has(agent)) {
@@ -62,7 +69,7 @@ export async function bootstrapCrew(): Promise<boolean> {
     }
     try {
       await execAsync(
-        `kirocrew agent create --name ${agent} --kiro-agent ${agent} --workspace ${CREW_WORKSPACE}`,
+        `kirocrew agent create --name '${agent}' --kiro-agent '${agent}' --workspace '${CREW_WORKSPACE}'`,
       );
       console.log(`  ✓ ${agent} — crew member created`);
     } catch (error) {

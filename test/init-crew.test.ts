@@ -30,7 +30,7 @@ describe('init-crew command', () => {
       if (cmd.includes('--version')) return { stdout: 'kirocrew 1.0.0' };
       if (cmd.includes('agent list')) return { stdout: 'NAME\ndefault *\n' };
       if (cmd.includes('agent create')) {
-        const name = /--name (\S+)/.exec(cmd)?.[1] ?? '';
+        const name = /--name '?([^' ]+)'?/.exec(cmd)?.[1] ?? '';
         created.push(name);
         return { stdout: `Created agent: ${name}` };
       }
@@ -53,7 +53,7 @@ describe('init-crew command', () => {
         return { stdout: 'NAME\nupgrade-guardian\nrev-eng\nbepower-setup\nfunctional-analyst\n' };
       }
       if (cmd.includes('agent create')) {
-        created.push(/--name (\S+)/.exec(cmd)?.[1] ?? '');
+        created.push(/--name '?([^' ]+)'?/.exec(cmd)?.[1] ?? '');
         return { stdout: 'Created' };
       }
       return { stdout: '' };
