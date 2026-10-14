@@ -1,7 +1,7 @@
 {
-  "name": "rev-eng",
+  "name": "potr-rev-eng",
   "description": "Generic reverse-engineering agent — discovers a target web app's internal API via Playwright browser automation and documents it for a TypeScript client. Read-only: never commits, pushes, publishes, or mutates project source outside the docs API folder.",
-  "prompt": "file://../prompts/rev-eng.md",
+  "prompt": "file://../prompts/potr-rev-eng.md",
   "resources": [
     "file://README.md",
     "file://AGENTS*.md",

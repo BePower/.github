@@ -34,37 +34,37 @@ export const initKiro = new Command()
 
       // Agents
       await mkdir(join(kiroDir, 'agents'), { recursive: true });
+      await cp(join(paths.kiro, 'agents/potr-setup.json'), join(kiroDir, 'agents/potr-setup.json'));
       await cp(
-        join(paths.kiro, 'agents/bepower-setup.json'),
-        join(kiroDir, 'agents/bepower-setup.json'),
+        join(paths.kiro, 'agents/potr-functional-analyst.json'),
+        join(kiroDir, 'agents/potr-functional-analyst.json'),
       );
       await cp(
-        join(paths.kiro, 'agents/functional-analyst.json'),
-        join(kiroDir, 'agents/functional-analyst.json'),
+        join(paths.kiro, 'agents/potr-upgrade-guardian.json'),
+        join(kiroDir, 'agents/potr-upgrade-guardian.json'),
       );
       await cp(
-        join(paths.kiro, 'agents/upgrade-guardian.json'),
-        join(kiroDir, 'agents/upgrade-guardian.json'),
+        join(paths.kiro, 'agents/potr-rev-eng.json'),
+        join(kiroDir, 'agents/potr-rev-eng.json'),
       );
-      await cp(join(paths.kiro, 'agents/rev-eng.json'), join(kiroDir, 'agents/rev-eng.json'));
 
       // Prompts
       await mkdir(join(kiroDir, 'prompts'), { recursive: true });
+      await cp(join(paths.kiro, 'prompts/potr-setup.md'), join(kiroDir, 'prompts/potr-setup.md'));
       await cp(
-        join(paths.kiro, 'prompts/bepower-setup.md'),
-        join(kiroDir, 'prompts/bepower-setup.md'),
+        join(paths.kiro, 'prompts/potr-functional-analyst.md'),
+        join(kiroDir, 'prompts/potr-functional-analyst.md'),
       );
       await cp(
-        join(paths.kiro, 'prompts/functional-analyst.md'),
-        join(kiroDir, 'prompts/functional-analyst.md'),
+        join(paths.kiro, 'prompts/potr-upgrade-guardian.md'),
+        join(kiroDir, 'prompts/potr-upgrade-guardian.md'),
       );
       await cp(
-        join(paths.kiro, 'prompts/upgrade-guardian.md'),
-        join(kiroDir, 'prompts/upgrade-guardian.md'),
+        join(paths.kiro, 'prompts/potr-rev-eng.md'),
+        join(kiroDir, 'prompts/potr-rev-eng.md'),
       );
-      await cp(join(paths.kiro, 'prompts/rev-eng.md'), join(kiroDir, 'prompts/rev-eng.md'));
 
-      // Resources (functional-analyst templates)
+      // Resources (potr-functional-analyst templates)
       await cp(join(paths.kiro, 'resources'), join(kiroDir, 'resources'), { recursive: true });
 
       // Skills (bepower-dev workflow skills)
@@ -82,16 +82,18 @@ export const initKiro = new Command()
 
       console.log('✓ Kiro agents installed globally');
       console.log(`\n  Agents:`);
-      console.log(`    ${join(kiroDir, 'agents/bepower-setup.json')}`);
-      console.log(`    ${join(kiroDir, 'agents/functional-analyst.json')}`);
+      console.log(`    ${join(kiroDir, 'agents/potr-setup.json')}`);
+      console.log(`    ${join(kiroDir, 'agents/potr-functional-analyst.json')}`);
       console.log(`  Prompts: ${join(kiroDir, 'prompts/')}`);
       console.log(`  Skills:  ${skillsDest}/`);
       console.log(`  Hooks:   ${join(kiroDir, 'hooks/')}`);
       console.log('\nAvailable agents:');
-      console.log('  • bepower-setup — Generate .kiro/ config for a project');
-      console.log('  • functional-analyst — Interactive requirements gathering (Italian)');
-      console.log('  • upgrade-guardian — Assess dependency/framework upgrade safety (read-only)');
-      console.log('  • rev-eng — Reverse-engineer a web app API via Playwright (read-only)');
+      console.log('  • potr-setup — Generate .kiro/ config for a project');
+      console.log('  • potr-functional-analyst — Interactive requirements gathering (Italian)');
+      console.log(
+        '  • potr-upgrade-guardian — Assess dependency/framework upgrade safety (read-only)',
+      );
+      console.log('  • potr-rev-eng — Reverse-engineer a web app API via Playwright (read-only)');
 
       // Offer to also wire these agents into KiroCrew (dashboard members).
       // Only prompts on an interactive TTY; non-interactive runs skip silently.

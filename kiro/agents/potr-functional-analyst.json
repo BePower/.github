@@ -1,8 +1,8 @@
 {
-  "name": "functional-analyst",
+  "name": "potr-functional-analyst",
   "description": "Agente di analisi funzionale — raccoglie requisiti, produce documentazione per approvazione e brief tecnico per il team dev",
-  "prompt": "file://../prompts/functional-analyst.md",
-  "resources": ["file://kiro/resources/functional-analyst/*.md"],
+  "prompt": "file://../prompts/potr-functional-analyst.md",
+  "resources": ["file://kiro/resources/potr-functional-analyst/*.md"],
   "tools": [
     "read",
     "write",

@@ -1,5 +1,5 @@
 ---
-name: upgrade-guardian
+name: potr-upgrade-guardian
 description: "Assess whether a dependency/framework upgrade is safe. Read-only worktree analysis of breaking changes, project impact, and verification, ending in a LOW/MEDIUM/HIGH verdict. Reusable by any agent via skill_search. Use before applying any dependency bump."
 ---
 
@@ -8,7 +8,7 @@ description: "Assess whether a dependency/framework upgrade is safe. Read-only w
 **Cognitive mode: Release-Safety Engineer (read-only)**
 
 This SKILL is the **core logic** of upgrade safety assessment. Any agent can load
-it on demand (`skill_search`); the `upgrade-guardian` agent is only a thin
+it on demand (`skill_search`); the `potr-upgrade-guardian` agent is only a thin
 read-only wrapper around it. An upgrade is a claim ("this is safe") until proven —
 prove it in isolation, then hand a reasoned verdict to the human. Never mutate the repo.
 

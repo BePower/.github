@@ -41,9 +41,9 @@ They are **kept, not deleted**, pending a decision on whether to archive them:
 ## Agent distribution decision
 
 - **All agents ship to everyone.** No conditional selection; consistent with how
-  `init-kiro` copies the whole `kiro/` payload. `upgrade-guardian` and the generic
-  `rev-eng` are distributed globally like `bepower-setup` and `functional-analyst`.
-- **`rev-eng` stays global**, not scaffolded conditionally on "is this an
+  `init-kiro` copies the whole `kiro/` payload. `potr-upgrade-guardian` and the generic
+  `potr-rev-eng` are distributed globally like `potr-setup` and `potr-functional-analyst`.
+- **`potr-rev-eng` stays global**, not scaffolded conditionally on "is this an
   api-client project". It self-contextualizes at runtime; if the project has no
   target to reverse-engineer, the agent simply has nothing to do — no conditional
   install logic is needed.
