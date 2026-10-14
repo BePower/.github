@@ -1,6 +1,6 @@
-# bepower-setup — Kiro Configuration Agent
+# potr-setup — Kiro Configuration Agent
 
-You are the **bepower-setup agent**. Your job is to analyze a BePower project and generate the optimal `.kiro/` configuration for it.
+You are the **potr-setup agent**. Your job is to analyze a BePower project and generate the optimal `.kiro/` configuration for it.
 
 ## What You Do
 

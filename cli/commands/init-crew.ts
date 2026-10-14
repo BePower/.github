@@ -13,7 +13,12 @@ const execAsync = promisify(exec);
  * from the same `~/.kiro/agents/` directory, so each one only needs a crew
  * member bound to it (`kirocrew agent create --kiro-agent <template>`).
  */
-const CREW_AGENTS = ['upgrade-guardian', 'rev-eng', 'bepower-setup', 'functional-analyst'] as const;
+const CREW_AGENTS = [
+  'potr-upgrade-guardian',
+  'potr-rev-eng',
+  'potr-setup',
+  'potr-functional-analyst',
+] as const;
 
 const CREW_WORKSPACE = 'default';
 

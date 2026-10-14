@@ -108,7 +108,7 @@ At the end it offers an interactive opt-in — **"Also initialize KiroCrew? (y/N
 What it installs:
 1. `~/.kiro/agents/*.json` — the four agent specs (also valid KiroCrew templates)
 2. `~/.kiro/prompts/*.md` — their system prompts
-3. `~/.kiro/skills/` — workflow skills (incl. the `upgrade-guardian` skill)
+3. `~/.kiro/skills/` — workflow skills (incl. the `potr-upgrade-guardian` skill)
 4. `~/.kiro/hooks/` — safety-gate, barrel-export, etc.
 5. `~/.kiro/steering/` — shared steering docs
 
@@ -196,10 +196,10 @@ These agents are distributed by `dev init-kiro` for use across all BePower proje
 
 | Agent | Description |
 |-------|-------------|
-| `bepower-setup` | Analyzes a project and generates optimal `.kiro/` configuration (steering, agent, prompt, skills) |
-| `functional-analyst` | Interactive functional analysis — collects requirements through conversation, produces approval docs and technical briefs (Italian-first) |
-| `upgrade-guardian` | Assesses the safety of a dependency/framework upgrade in an isolated worktree and returns a reasoned **LOW/MEDIUM/HIGH** risk verdict with real breaking-change analysis, project impact and verification |
-| `rev-eng` | Reverse-engineers a target web app's internal API via Playwright and documents it for a TypeScript client |
+| `potr-setup` | Analyzes a project and generates optimal `.kiro/` configuration (steering, agent, prompt, skills) |
+| `potr-functional-analyst` | Interactive functional analysis — collects requirements through conversation, produces approval docs and technical briefs (Italian-first) |
+| `potr-upgrade-guardian` | Assesses the safety of a dependency/framework upgrade in an isolated worktree and returns a reasoned **LOW/MEDIUM/HIGH** risk verdict with real breaking-change analysis, project impact and verification |
+| `potr-rev-eng` | Reverse-engineers a target web app's internal API via Playwright and documents it for a TypeScript client |
 
 ## Using the Agents
 
@@ -212,7 +212,7 @@ Pass the agent name to `kiro-cli chat`:
 ```bash
 # in the repo you want it to work on
 cd ~/projects/bepower/bep-cdk
-kiro-cli chat --agent upgrade-guardian
+kiro-cli chat --agent potr-upgrade-guardian
 ```
 
 Then start the conversation by telling it what to assess, e.g.:
@@ -223,7 +223,7 @@ The agent reads the project context (`README.md`, `AGENTS.md` if present, `packa
 
 ### In the KiroCrew dashboard
 
-After `dev init-crew` the agents appear as **members in the dashboard's agent picker**. Open a new chat, pick `upgrade-guardian` (or `rev-eng`), and start the conversation the same way — the result (e.g. an upgrade safety report) is rendered inline, with each member keeping its own dedicated memory.
+After `dev init-crew` the agents appear as **members in the dashboard's agent picker**. Open a new chat, pick `potr-upgrade-guardian` (or `potr-rev-eng`), and start the conversation the same way — the result (e.g. an upgrade safety report) is rendered inline, with each member keeping its own dedicated memory.
 
 ### How to start the conversation
 
@@ -231,12 +231,12 @@ These agents are **task-driven**, not chatty — open with the concrete thing yo
 
 | Agent | A good opening message |
 |-------|------------------------|
-| `upgrade-guardian` | _"Assess upgrading `<package>` from `<x>` to `<y>` in this repo. Is it safe to merge?"_ |
-| `rev-eng` | _"Reverse-engineer the API of `<url>` and document the endpoints for a TypeScript client."_ |
-| `bepower-setup` | _"Analyze this project and generate the `.kiro/` configuration for it."_ |
-| `functional-analyst` | _"Raccogliamo i requisiti per `<feature>`."_ (Italian-first) |
+| `potr-upgrade-guardian` | _"Assess upgrading `<package>` from `<x>` to `<y>` in this repo. Is it safe to merge?"_ |
+| `potr-rev-eng` | _"Reverse-engineer the API of `<url>` and document the endpoints for a TypeScript client."_ |
+| `potr-setup` | _"Analyze this project and generate the `.kiro/` configuration for it."_ |
+| `potr-functional-analyst` | _"Raccogliamo i requisiti per `<feature>`."_ (Italian-first) |
 
-The agent does the rest — reads context, analyzes, and returns a verdict or document. For `upgrade-guardian` the output is a safety report with a LOW/MEDIUM/HIGH verdict and a **suggested** (never executed) commit message; you decide whether to apply it.
+The agent does the rest — reads context, analyzes, and returns a verdict or document. For `potr-upgrade-guardian` the output is a safety report with a LOW/MEDIUM/HIGH verdict and a **suggested** (never executed) commit message; you decide whether to apply it.
 
 ## Architecture
 

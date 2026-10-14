@@ -1,7 +1,7 @@
 {
-  "name": "bepower-setup",
+  "name": "potr-setup",
   "description": "Agent that analyzes a project and generates optimal .kiro/ configuration (steering, agent, prompt, skills)",
-  "prompt": "file://../prompts/bepower-setup.md",
+  "prompt": "file://../prompts/potr-setup.md",
   "resources": ["skill://.kiro/skills/**/SKILL.md"],
   "tools": [
     "read",

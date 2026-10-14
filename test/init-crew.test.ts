@@ -42,7 +42,12 @@ describe('init-crew command', () => {
     const ran = await bootstrapCrew();
 
     expect(ran).toBe(true);
-    expect(created).toEqual(['upgrade-guardian', 'rev-eng', 'bepower-setup', 'functional-analyst']);
+    expect(created).toEqual([
+      'potr-upgrade-guardian',
+      'potr-rev-eng',
+      'potr-setup',
+      'potr-functional-analyst',
+    ]);
   });
 
   it('skips members that already exist (idempotent)', async () => {
@@ -50,7 +55,10 @@ describe('init-crew command', () => {
     mockExec((cmd) => {
       if (cmd.includes('--version')) return { stdout: 'kirocrew 1.0.0' };
       if (cmd.includes('agent list')) {
-        return { stdout: 'NAME\nupgrade-guardian\nrev-eng\nbepower-setup\nfunctional-analyst\n' };
+        return {
+          stdout:
+            'NAME\npotr-upgrade-guardian\npotr-rev-eng\npotr-setup\npotr-functional-analyst\n',
+        };
       }
       if (cmd.includes('agent create')) {
         created.push(/--name '?([^' ]+)'?/.exec(cmd)?.[1] ?? '');

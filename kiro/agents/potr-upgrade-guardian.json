@@ -1,7 +1,7 @@
 {
-  "name": "upgrade-guardian",
+  "name": "potr-upgrade-guardian",
   "description": "Assesses the safety of a dependency/framework upgrade in an isolated worktree. Read-only: analyzes real breaking changes, project impact and verification, then returns a reasoned LOW/MEDIUM/HIGH risk verdict. Never commits, pushes, publishes, or opens PRs.",
-  "prompt": "file://../prompts/upgrade-guardian.md",
+  "prompt": "file://../prompts/potr-upgrade-guardian.md",
   "resources": [
     "file://README.md",
     "file://AGENTS*.md",

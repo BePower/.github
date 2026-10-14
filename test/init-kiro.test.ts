@@ -34,19 +34,19 @@ describe('init-kiro command', () => {
     const kiroDir = join(tempDir, '.kiro');
 
     // Agents
-    expect(await fileExists(join(kiroDir, 'agents/bepower-setup.json'))).toBe(true);
-    expect(await fileExists(join(kiroDir, 'agents/functional-analyst.json'))).toBe(true);
-    expect(await fileExists(join(kiroDir, 'agents/upgrade-guardian.json'))).toBe(true);
-    expect(await fileExists(join(kiroDir, 'agents/rev-eng.json'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'agents/potr-setup.json'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'agents/potr-functional-analyst.json'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'agents/potr-upgrade-guardian.json'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'agents/potr-rev-eng.json'))).toBe(true);
 
     // Prompts
-    expect(await fileExists(join(kiroDir, 'prompts/bepower-setup.md'))).toBe(true);
-    expect(await fileExists(join(kiroDir, 'prompts/functional-analyst.md'))).toBe(true);
-    expect(await fileExists(join(kiroDir, 'prompts/upgrade-guardian.md'))).toBe(true);
-    expect(await fileExists(join(kiroDir, 'prompts/rev-eng.md'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'prompts/potr-setup.md'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'prompts/potr-functional-analyst.md'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'prompts/potr-upgrade-guardian.md'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'prompts/potr-rev-eng.md'))).toBe(true);
 
     // Resources
-    expect(await fileExists(join(kiroDir, 'resources/functional-analyst'))).toBe(true);
+    expect(await fileExists(join(kiroDir, 'resources/potr-functional-analyst'))).toBe(true);
 
     // Skills
     expect(await fileExists(join(kiroDir, 'skills/bepower-dev'))).toBe(true);
