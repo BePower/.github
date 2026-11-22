@@ -1,0 +1,112 @@
+name: PR checks
+
+# Reusable workflow: install, lint, build and test a Node repo on pull requests.
+# Caller (same bytes in every repo, no inputs needed):
+#
+#   name: PR checks
+#   on: pull_request
+#   permissions:
+#     contents: read
+#     packages: read
+#   jobs:
+#     checks:
+#       uses: BePower/.github/.github/workflows/pr-checks.yml@main
+#
+# This repo is public: no secrets, account ids or internal names here.
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: >-
+          Node version to use. Empty: read it from package.json (volta.node,
+          devEngines.runtime, engines.node), else lts/*.
+          Not a secret: it sits in the caller file and shows in logs.
+        type: string
+        required: false
+        default: ''
+      working-directory:
+        description: >-
+          Folder with package.json, for monorepos. Every step runs there.
+          Not a secret: it sits in the caller file and shows in logs.
+        type: string
+        required: false
+        default: '.'
+      extra-run:
+        description: >-
+          Multi-line shell commands run after the standard steps.
+          Not a secret: it sits in the caller file and shows in logs.
+        type: string
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  packages: read
+
+concurrency:
+  group: pr-checks-${{ github.repository }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@v7
+
+      # setup-node does not fall back by itself when package.json has no Node
+      # version, so decide here: input, else package.json, else lts/*.
+      - name: Pick Node version
+        id: node
+        env:
+          INPUT_NODE_VERSION: ${{ inputs.node-version }}
+        run: |
+          if [ -n "$INPUT_NODE_VERSION" ]; then
+            echo "mode=input" >> "$GITHUB_OUTPUT"
+          elif node -e '
+            const p = require("./package.json");
+            const rt = p.devEngines && p.devEngines.runtime;
+            const has = (rt && (Array.isArray(rt) ? rt.length : rt.version))
+              || (p.volta && p.volta.node) || (p.engines && p.engines.node);
+            process.exit(has ? 0 : 1);
+          ' 2>/dev/null; then
+            echo "mode=file" >> "$GITHUB_OUTPUT"
+          else
+            echo "mode=lts" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: ${{ steps.node.outputs.mode == 'input' && inputs.node-version || steps.node.outputs.mode == 'lts' && 'lts/*' || '' }}
+          node-version-file: ${{ steps.node.outputs.mode == 'file' && format('{0}/package.json', inputs.working-directory) || '' }}
+          registry-url: https://npm.pkg.github.com
+          scope: '@bepower'
+          # No cache shared between PR runs (cache poisoning). Slower npm ci.
+          package-manager-cache: false
+
+      - name: Install
+        run: npm ci
+        env:
+          # .npmrc files read either variable; GITHUB_TOKEN is a short-lived
+          # token of this run, read-only for packages.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Lint
+        run: npm run lint --if-present
+
+      - name: Build
+        run: npm run build --if-present
+
+      - name: Test
+        run: npm run test --if-present
+
+      - name: Extra commands
+        if: inputs.extra-run != ''
+        run: bash -e -c "$EXTRA_RUN"
+        env:
+          EXTRA_RUN: ${{ inputs.extra-run }}

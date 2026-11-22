@@ -238,6 +238,31 @@ These agents are **task-driven**, not chatty — open with the concrete thing yo
 
 The agent does the rest — reads context, analyzes, and returns a verdict or document. For `upgrade-guardian` the output is a safety report with a LOW/MEDIUM/HIGH verdict and a **suggested** (never executed) commit message; you decide whether to apply it.
 
+## Reusable workflow: PR checks
+
+`.github/workflows/pr-checks.yml` runs `npm ci`, `lint`, `build` and `test` (each only if the script exists) on pull requests. Every Node repo uses the same caller file, `.github/workflows/pr-checks.yml`:
+
+```yaml
+name: PR checks
+on: pull_request
+permissions:
+  contents: read
+  packages: read
+jobs:
+  checks:
+    uses: BePower/.github/.github/workflows/pr-checks.yml@main
+```
+
+Optional inputs (`with:`). They are not secrets: they sit in the caller file and show in logs.
+
+| Input | Default | Use |
+|-------|---------|-----|
+| `node-version` | empty | Pin Node. Empty: `volta.node`, `devEngines.runtime` or `engines.node` from `package.json`, else `lts/*` |
+| `working-directory` | `.` | Monorepo: run every step in a subfolder |
+| `extra-run` | empty | Multi-line shell commands run after the standard steps |
+
+`@bepower` packages are read with the run's `GITHUB_TOKEN`: the package must allow the calling repo (package settings, "Manage Actions access"). Because callers use `@main`, a change here reaches every repo at once: review it with care.
+
 ## Architecture
 
 ```
@@ -245,7 +270,7 @@ BePower/.github/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/          # Org-wide issue templates (bug, feature)
 │   ├── PULL_REQUEST_TEMPLATE.md # Org-wide PR template
-│   └── workflows/               # CI for this repo
+│   └── workflows/               # CI for this repo + reusable pr-checks.yml
 ├── profile/
 │   └── README.md                # GitHub org profile
 │
